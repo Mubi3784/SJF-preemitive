@@ -1,0 +1,42 @@
+<<<<<<< HEAD
+#gantt-chart{
+    display: flex;
+    margin: 15px auto;
+}
+
+.gantt-process{
+    border: 1px solid black;
+    padding: 6px;
+    display: inline;
+    margin: auto 5px;
+}
+
+.time{
+    margin-top: 7.5px;
+    margin-left: 5px;
+}
+.gantt-container{
+    display: flex;
+    flex-direction: column;
+=======
+#gantt-chart{
+    display: flex;
+    margin: 15px auto;
+}
+
+.gantt-process{
+    border: 1px solid black;
+    padding: 6px;
+    display: inline;
+    margin: auto 5px;
+}
+
+.time{
+    margin-top: 7.5px;
+    margin-left: 5px;
+}
+.gantt-container{
+    display: flex;
+    flex-direction: column;
+>>>>>>> 16c40d818520220437074c56cab2ebf33b1601c4
+}
