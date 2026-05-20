@@ -2,16 +2,19 @@ const executeBtn = document.getElementById("execute-btn");
 const arrivalTimeInput = Array.from(document.getElementsByClassName("arrival-time"));
 const burstTimeInput = Array.from(document.getElementsByClassName("burst-time"));
 const processes = Array.from(document.getElementsByClassName("process"));
+const ganttChart = document.getElementById("gantt-chart");
+const processData = [];
 const readyQueue = [];
 const terminationQueue = [];
-const ganttChart = document.getElementById("gantt-chart");
 let time = 0;
 
 executeBtn.addEventListener("click", () => {
     event.preventDefault();
-
-    const processData = [];
-
+    if (inputsValidator(arrivalTimeInput, burstTimeInput)) {
+        alert("Enter all the required inputs!");
+        inputsCleaner(arrivalTimeInput, burstTimeInput);
+        return;
+    }
 
     const arrivalTime = [];
     arrivalTimeInput.forEach((input) => {
@@ -31,12 +34,7 @@ executeBtn.addEventListener("click", () => {
         processData.push(obj);
     }
 
-    let totalTime = 0;
-    for (let i = 0; i < burstTime.length; i++) {
-        totalTime += parseInt(burstTime[i]);
-    }
-
-    for (let i = 0; i <= totalTime - 1; i++) {
+    while (!(processData.length == 0)) {
         console.log("time = " + time);
 
         processData.forEach((process) => {
@@ -58,27 +56,32 @@ executeBtn.addEventListener("click", () => {
                 } else if (lowestBT["burst-time"] > readyQueue[i + 1]["burst-time"]) {
                     lowestBT = readyQueue[i + 1];
                     lowestBTIndex = i + 1;
-                    console.log(lowestBT);
                 } else {
                     lowestBT = readyQueue[i]
                     lowestBTIndex = i;
                 }
             }
 
-
             readyQueue[lowestBTIndex]["burst-time"]--;
-            if(readyQueue[lowestBTIndex]['burst-time'] == 0){
-                readyQueue.splice(lowestBTIndex, 1);
-            }
+
         } else if (readyQueue.length === 1) {
             lowestBT = readyQueue[0];
             lowestBTIndex = 0;
             readyQueue[lowestBTIndex]["burst-time"]--;
-            if(readyQueue[lowestBTIndex]['burst-time'] == 0){
-                readyQueue.splice(lowestBTIndex, 1);
-            }
+
         } else {
             console.log("The ready queue is empty!");
+            time++;
+            continue;
+        }
+
+        if (readyQueue[lowestBTIndex]['burst-time'] == 0) {
+            readyQueue.splice(lowestBTIndex, 1);
+            for (let i = 0; i < processData.length; i++) {
+                if (processData[i].id === lowestBT.id) {
+                    processData.splice(i, 1);
+                }
+            }
         }
 
         console.log(lowestBT);
@@ -95,7 +98,24 @@ executeBtn.addEventListener("click", () => {
     </div>`);
 
         time++;
+        console.log(processData);
+        console.log(readyQueue);
     }
-
-    console.log(readyQueue);
 })
+    
+
+const inputsValidator = (arrivalArray, burstArray) => {
+    for (let i = 0; i < arrivalArray.length; i++) {
+        if ((arrivalArray[i].value == "") || (burstArray[i].value == "")) {
+            return true;
+        }
+    }
+    return false;
+}
+
+const inputsCleaner = (arrivalArray, burstArray) => {
+    for (let i = 0; i < arrivalArray.length; i++) {
+        arrivalArray[i].value = "";
+        burstArray[i].value = "";
+    }
+}
