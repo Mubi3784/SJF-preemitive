@@ -3,9 +3,11 @@ const arrivalTimeInput = Array.from(document.getElementsByClassName("arrival-tim
 const burstTimeInput = Array.from(document.getElementsByClassName("burst-time"));
 const processes = Array.from(document.getElementsByClassName("process"));
 const ganttChart = document.getElementById("gantt-chart");
+const filteredGanttChart = document.getElementById("filtered-gantt-chart");
+const chartHeadings = Array.from(document.getElementsByClassName("chart-headings"));
 const processData = [];
 const readyQueue = [];
-const terminationQueue = [];
+const filteredGanttArray = [[], []];
 let time = 0;
 
 executeBtn.addEventListener("click", () => {
@@ -36,6 +38,9 @@ executeBtn.addEventListener("click", () => {
 
     while (!(processData.length == 0)) {
         console.log("time = " + time);
+        if (time == 0) {
+            filteredGanttArray[0].push(time);
+        }
 
         processData.forEach((process) => {
             if (time == process["arrival-time"]) {
@@ -71,8 +76,30 @@ executeBtn.addEventListener("click", () => {
 
         } else {
             console.log("The ready queue is empty!");
+            ganttChart.insertAdjacentHTML("beforeend", `
+                <div class="gantt-container">
+                    <div>
+                        <div class="gantt-process"></div>
+                        <span class="arrow"><i class="bi bi-arrow-right"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                    fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd"
+                                        d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8" />
+                                </svg></i>
+                        </span>
+                    </div>
+                    <div class="time">${time}</div>
+                </div>`);
             time++;
             continue;
+        }
+
+        let pName = `P-${lowestBT.id}`;
+
+        if (filteredGanttArray[filteredGanttArray.length - 1].length == 0) {
+            filteredGanttArray[1].push(pName);
+        } else if (!(pName == filteredGanttArray[1][filteredGanttArray[1].length - 1])) {
+            filteredGanttArray[1].push(pName);
+            filteredGanttArray[0].push(time);
         }
 
         if (readyQueue[lowestBTIndex]['burst-time'] == 0) {
@@ -87,7 +114,7 @@ executeBtn.addEventListener("click", () => {
         console.log(lowestBT);
         ganttChart.insertAdjacentHTML("beforeend", `<div class="gantt-container">
         <div>
-            <div class="gantt-process">P-${lowestBT["id"]}</div><span><i class="bi bi-arrow-right"><svg
+            <div class="gantt-process">P-${lowestBT["id"]}</div><span class="arrow"><i class="bi bi-arrow-right"><svg
                         xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-arrow-right" viewBox="0 0 16 16">
                         <path fill-rule="evenodd"
@@ -101,8 +128,36 @@ executeBtn.addEventListener("click", () => {
         console.log(processData);
         console.log(readyQueue);
     }
+
+    for(let i = 0; i < filteredGanttArray[0].length; i++){
+        filteredGanttChart.insertAdjacentHTML("beforeend", `
+            <div class="gantt-container">
+                <div>
+                    <div class="gantt-process">${filteredGanttArray[1][i]}</div>
+                    <span class="arrow" ><i class="bi bi-arrow-right"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd"
+                                    d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8" />
+                            </svg></i>
+                    </span>
+                </div>
+                <div class="time">${filteredGanttArray[0][i]}</div>
+            </div>`)
+    }
+
+    chartHeadings.forEach((heading)=> {
+        heading.style.display = "block"; 
+    })
+
+    ganttChart.insertAdjacentHTML("beforeend", `
+        <span class="last-time">${time}</span>
+    `)
+
+    filteredGanttChart.insertAdjacentHTML("beforeend", `
+        <span class="last-time">${time}</span>
+    `)
 })
-    
+
 
 const inputsValidator = (arrivalArray, burstArray) => {
     for (let i = 0; i < arrivalArray.length; i++) {

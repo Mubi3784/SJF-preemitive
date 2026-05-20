@@ -1,4 +1,4 @@
-#gantt-chart{
+#gantt-chart, #filtered-gantt-chart{
     display: flex;
     margin: 15px auto;
 }
@@ -8,6 +8,7 @@
     padding: 6px;
     display: inline;
     margin: auto 5px;
+    min-width: 30px;
 }
 
 .time{
@@ -17,4 +18,18 @@
 .gantt-container{
     display: flex;
     flex-direction: column;
+}
+
+.gantt-container:last-of-type .arrow{
+    display: none;
+}
+
+.chart-headings{
+    display: none;
+}
+
+.last-time{
+    position: relative;
+    top: 25px;
+    right: 15px;
 }

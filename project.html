@@ -22,8 +22,8 @@
             <tbody>
                 <tr class="process">
                     <td class="process-name" >P 1</td>
-                    <td><input type="number" class="arrival-time"  id="A1"  required></td>
-                    <td><input type="number" class="burst-time" min="1" id="B1"  required></td>
+                    <td><input type="number" class="arrival-time" value="1"  id="A1"  required></td>
+                    <td><input type="number" class="burst-time" value="9" id="B1"  required></td>
                 </tr>
                 <tr class="process">
                     <td class="process-name">P 2</td>
@@ -49,7 +49,15 @@
         </table>
         <button type="submit" id="execute-btn">Execute</button>
     </form>
-    <div id="gantt-chart"></div>
+    <section id="gantt-section">
+        <h2 class="chart-headings">Initial Gantt Chart</h2>
+        <div id="gantt-chart"></div>
+    </section>
+    <section id="final-gantt-section">
+        <h2 class="chart-headings">Final Gantt Chart</h2>
+        <div id="filtered-gantt-chart"></div>
+    </section>
+    
     <script src="project.js"></script>
 </body>
 
