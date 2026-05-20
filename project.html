@@ -21,9 +21,9 @@
             </thead>
             <tbody>
                 <tr class="process">
-                    <td class="process-name" >P 1</td>
-                    <td><input type="number" class="arrival-time" value="1"  id="A1"  required></td>
-                    <td><input type="number" class="burst-time" value="9" id="B1"  required></td>
+                    <td class="process-name">P 1</td>
+                    <td><input type="number" class="arrival-time" value="1" id="A1" required></td>
+                    <td><input type="number" class="burst-time" value="9" id="B1" required></td>
                 </tr>
                 <tr class="process">
                     <td class="process-name">P 2</td>
@@ -57,7 +57,24 @@
         <h2 class="chart-headings">Final Gantt Chart</h2>
         <div id="filtered-gantt-chart"></div>
     </section>
-    
+    <section id="stats">
+            <table id="stats-table">
+                <thead>
+                    <tr>
+                        <th>Process Name</th>
+                        <th>Arrival Time</th>
+                        <th>Burst Time</th>
+                        <th>Waiting Time</th>
+                        <th>Turnaround Time</th>
+                        <th>Response Time</th>
+                        <th>Completion Time</th>
+                    </tr>
+                </thead>
+                <tbody id="stats-body">
+                </tbody>
+            </table>
+    </section>
+
     <script src="project.js"></script>
 </body>
 

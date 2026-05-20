@@ -24,7 +24,7 @@
     display: none;
 }
 
-.chart-headings{
+.chart-headings, #stats-table{
     display: none;
 }
 

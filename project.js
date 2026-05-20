@@ -5,13 +5,26 @@ const processes = Array.from(document.getElementsByClassName("process"));
 const ganttChart = document.getElementById("gantt-chart");
 const filteredGanttChart = document.getElementById("filtered-gantt-chart");
 const chartHeadings = Array.from(document.getElementsByClassName("chart-headings"));
-const processData = [];
-const readyQueue = [];
-const filteredGanttArray = [[], []];
+const statsTable = document.getElementById("stats-table");
+const statsBody = document.getElementById("stats-body");
+let processData = [];
+let readyQueue = [];
+let filteredGanttArray = [[], []];
+let statsArr = [];
 let time = 0;
 
 executeBtn.addEventListener("click", () => {
     event.preventDefault();
+    ganttChart.innerHTML = "";
+    filteredGanttChart.innerHTML = "";
+    statsBody.innerHTML = "";
+    processData = [];
+    readyQueue = [];
+    filteredGanttArray = [[], []];
+    statsArr = [];
+    
+    time = 0;
+
     if (inputsValidator(arrivalTimeInput, burstTimeInput)) {
         alert("Enter all the required inputs!");
         inputsCleaner(arrivalTimeInput, burstTimeInput);
@@ -34,6 +47,19 @@ executeBtn.addEventListener("click", () => {
             "burst-time": burstTime[i]
         }
         processData.push(obj);
+    }
+
+    for(let i = 0; i < processData.length; i++){
+        let obj = {
+            "name": `P-${processData[i].id }`,
+            "arrival-time": processData[i]["arrival-time"],
+            "burst-time": processData[i]["burst-time"],
+            "completion-time": "",
+            "waiting-time": "",
+            "turnaround-time": "",
+            "response-time": ""
+        }
+        statsArr.push(obj);
     }
 
     while (!(processData.length == 0)) {
@@ -123,7 +149,6 @@ executeBtn.addEventListener("click", () => {
         </div>
         <div class="time">${time}</div>
     </div>`);
-
         time++;
         console.log(processData);
         console.log(readyQueue);
@@ -156,6 +181,36 @@ executeBtn.addEventListener("click", () => {
     filteredGanttChart.insertAdjacentHTML("beforeend", `
         <span class="last-time">${time}</span>
     `)
+
+    statsTable.style.display = "block";
+    
+    statsArr.forEach((process) => {
+        let lastIndex = filteredGanttArray[1].findLastIndex((element) => element == process.name);
+        if(lastIndex == filteredGanttArray[1].length - 1){
+            process["completion-time"] = time;
+        }else {
+            process["completion-time"] = filteredGanttArray[0][lastIndex + 1];
+        }
+        
+        let firstIndex = filteredGanttArray[1].findIndex((element) => element == process.name);
+        if(firstIndex == 0){
+            process["response-time"] = 0;
+        } else{
+            process["response-time"] = filteredGanttArray[0][firstIndex - 1];
+        }
+        process["turnaround-time"] = process["completion-time"] - process["arrival-time"];
+        process["waiting-time"] = process["turnaround-time"] - process["burst-time"]; 
+        statsBody.insertAdjacentHTML("beforeend", `
+            <tr>
+                <td>${process.name}</td>
+                <td>${process["arrival-time"]}</td>
+                <td>${process["burst-time"]}</td>
+                <td>${process["waiting-time"]}</td>
+                <td>${process["turnaround-time"]}</td>
+                <td>${process["response-time"]}</td>
+                <td>${process["completion-time"]}</td>
+            </tr>`)
+    })
 })
 
 
