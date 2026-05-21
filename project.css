@@ -122,23 +122,23 @@ form table tbody tr:nth-child(even){
 .process-name{
     font-weight: 600;
 }
- form input[type="number"]{
-    width: 75px;
-    padding: 6px 8px;
-    border-radius: 6px;
-    font-size: 0.5rem;
-    text-align: center;
-    color: var(--light-bg);
-    background: var(--text-dark);
-    outline: none;
-    transition: border-color 0.2s;
- }
 
- form input[type="number"]:focus{
-    border-color: var(--accent);
-    background-color: var(--white);
-    color: black;
- }
+input[type="number"] {
+   text-align: center;
+   font-size: 14px;
+   color: #2d3748;
+   font-weight: bold;
+   width: 60px;
+   padding: 6px;
+   border: 1px solid #cbd5e0;
+   border-radius: 4px;
+}
+
+input[type=" number"]:focus {
+    outline: none;
+    border-color: #66b2b2;
+}
+
  #execute-btn{
     display: block;
     margin: 0 auto;
@@ -187,9 +187,10 @@ form table tbody tr:nth-child(even){
     min-width: 48px;
 }
 .gantt-process{
-    background-color: var(--success);
-    color: var(--white);
-    border: 1.5px solid  #2d8a5a;
+    background-color: #ebf8ff;
+    color: #2b6cb0;
+    display: inline;
+    border: 1.5px solid  #90cdf4;
     padding: 5px 7px;
     font-size: 0.82rem;
     font-weight: 600;
@@ -198,10 +199,16 @@ form table tbody tr:nth-child(even){
     margin-bottom: 2px;
 
 }
+
 .gantt-process:empty{
     background-color:#d1d8e8 ;
     border-color: #aab5cc;
 }
+
+.gantt-container:last-of-type .arrow{
+    display: none;
+}
+
 .arrow{
     color: var(--text-muted);
     font-size: 0.85rem;
