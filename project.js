@@ -26,8 +26,8 @@ executeBtn.addEventListener("click", () => {
     time = 0;
 
     if (inputsValidator(arrivalTimeInput, burstTimeInput)) {
-        alert("Enter all the required inputs!");
-        inputsCleaner(arrivalTimeInput, burstTimeInput);
+        alert("Enter all the required inputs && also follow the range constraints");
+        // inputsCleaner(arrivalTimeInput, burstTimeInput);
         return;
     }
 
@@ -92,7 +92,7 @@ executeBtn.addEventListener("click", () => {
                     lowestBTIndex = i;
                 }
             }
-
+            
             readyQueue[lowestBTIndex]["burst-time"]--;
 
         } else if (readyQueue.length === 1) {
@@ -216,7 +216,7 @@ executeBtn.addEventListener("click", () => {
 
 const inputsValidator = (arrivalArray, burstArray) => {
     for (let i = 0; i < arrivalArray.length; i++) {
-        if ((arrivalArray[i].value == "") || (burstArray[i].value == "")) {
+        if ((arrivalArray[i].value == "") || (burstArray[i].value == "") || (arrivalArray[i].value < 0 || arrivalArray[i].value >10) || (burstArray[i].value <= 0 || burstArray[i].value > 10)) {
             return true;
         }
     }
