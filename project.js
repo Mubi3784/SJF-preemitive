@@ -12,7 +12,7 @@ let readyQueue = [];
 let filteredGanttArray = [[], []];
 let statsArr = [];
 let time = 0;
-
+ 
 executeBtn.addEventListener("click", () => {
     event.preventDefault();
     ganttChart.innerHTML = "";
@@ -175,11 +175,11 @@ executeBtn.addEventListener("click", () => {
     })
 
     ganttChart.insertAdjacentHTML("beforeend", `
-        <span class="last-time">${time}</span>
+        <span class="last-time">Total Time ${time}</span>
     `)
 
     filteredGanttChart.insertAdjacentHTML("beforeend", `
-        <span class="last-time">${time}</span>
+        <span class="last-time"> Total Time ${time}</span>
     `)
 
     statsTable.style.display = "block";
@@ -229,3 +229,8 @@ const inputsCleaner = (arrivalArray, burstArray) => {
         burstArray[i].value = "";
     }
 }
+
+ setTimeout(function () {
+            document.getElementById('loading-screen').classList.add('hidden');
+            document.getElementById('main-content').classList.remove('blurred');
+        }, 1500);

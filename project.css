@@ -1,35 +1,304 @@
+:root {
+    --primary: #2c3e6b; 
+    --accent: #4a90d9;   
+    --light-bg: #f0f4fb;      
+    --white: #ffffff;
+    --border: #c8d8ee;
+    --text-dark: #1e2a45;
+    --text-muted: #6b7a99;  
+    --success: #3aaa72;       
+    --shadow: 0 2px 8px rgba(44, 62, 107, 0.12);
+}
+
+*{
+    margin: 0; 
+    padding:0 ;
+    box-sizing: border-box;
+}
+body{
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--text-dark);
+      min-height: 100vh;
+      padding: 20px;
+}
+
+#loading-screen{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--primary);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+    gap: 18px;
+}
+.loader-circle{
+    width: 52px;
+    height: 52px;
+    border: 5px solid rgba(255, 255, 255, 0.25);
+    border-top-color: white;
+    border-radius: 50%;
+ animation: spin 0.9s linear infinite;
+    
+}
+@keyframes spin {
+    to {
+        transform:rotate(360deg);
+    }
+}
+
+.loading-screen p{
+    color: white;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    opacity: 0.85;
+}
+#loading-screen.hidden{
+display: none;
+}
+
+#main-content.blurred{
+    filter: blur(4px);
+    pointer-events: none;
+    user-select: none;
+}
+
+
+#main-content{
+    max-width: 860px;
+    margin: 0 auto;
+}
+
+h1{
+    text-align: center;
+    font-size: 1.55rem;
+    color: var(--white);
+    margin-bottom:28px ;
+    padding-bottom: 12px;
+    border-bottom:3px solid var(--accent);
+    line-height: 1.4;
+
+}
+
+form{
+    background: var(--white);
+    border-radius: 10px;
+    padding: 24px;
+    box-shadow: var(--shadow);
+    margin-bottom: 30px;
+}
+
+form table{
+    width: 100%;
+    border-collapse: collapse; 
+    /* remove border */
+    margin-bottom:18px;
+}
+
+form table thead th{
+    background-color: var(--primary);
+    color: var(--white);
+    padding: 10px 14px;
+    text-align: center;
+    font-size: 0.92rem;
+    font-weight: 600;
+}
+
+form table tbody td {
+    padding: 8px 12px;
+    text-align: center;
+    border-bottom: 1px solid var(--border) ;
+
+}
+
+form table tbody tr:nth-child(even){
+    background-color: #c2c8d3;
+}
+
+.process-name{
+    font-weight: 600;
+}
+ form input[type="number"]{
+    width: 75px;
+    padding: 6px 8px;
+    border-radius: 6px;
+    font-size: 0.5rem;
+    text-align: center;
+    color: var(--light-bg);
+    background: var(--text-dark);
+    outline: none;
+    transition: border-color 0.2s;
+ }
+
+ form input[type="number"]:focus{
+    border-color: var(--accent);
+    background-color: var(--white);
+    color: black;
+ }
+ #execute-btn{
+    display: block;
+    margin: 0 auto;
+    padding: 10px 36px;
+    background-color: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 7px;
+    font-size: 1rem;
+    font-weight: 699;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    transition: background-color 0.2s;
+ }
+
+ #execute-btn:hover{
+    background-color: var(--primary);
+ }
+ 
+#gantt-section, #final-gantt-section{
+    background: white;
+    border-radius: 10px;
+    padding: 20px 24px;
+    box-shadow: var(--shadow);
+    margin-bottom: 24px;
+    overflow-x: auto;
+}
+.chart-headings{
+    font-size: 1.1rem;
+    color: var(--primary);
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
 #gantt-chart, #filtered-gantt-chart{
     display: flex;
-    margin: 15px auto;
-}
-
-.gantt-process{
-    border: 1px solid black;
-    padding: 6px;
-    display: inline;
-    margin: auto 5px;
-    min-width: 30px;
-}
-
-.time{
-    margin-top: 7.5px;
-    margin-left: 5px;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+    margin: 10px 0 6px 0;
+    padding-bottom: 10px;
 }
 .gantt-container{
     display: flex;
     flex-direction: column;
+    align-items:flex-start;
+    min-width: 48px;
 }
+.gantt-process{
+    background-color: var(--success);
+    color: var(--white);
+    border: 1.5px solid  #2d8a5a;
+    padding: 5px 7px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    min-width: 32px;
+    text-align: center;
+    margin-bottom: 2px;
 
-.gantt-container:last-of-type .arrow{
-    display: none;
 }
-
-.chart-headings, #stats-table{
-    display: none;
+.gantt-process:empty{
+    background-color:#d1d8e8 ;
+    border-color: #aab5cc;
+}
+.arrow{
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    padding: 4px 2px;
+    
+}
+.time{
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-top: 5px;
+    padding-left: 2px;
 }
 
 .last-time{
+    font-size: 0.78rem;
+    color: var(--text-muted);
     position: relative;
-    top: 25px;
-    right: 15px;
+    top: 58px;
+    right: 12px;
+    white-space: nowrap;
+    font-weight: 900;
+     
+}
+ 
+
+#stats{
+    background: white;
+    border-radius: 10px;
+    padding: 20px 24px;
+    box-shadow: var(--shadow);
+    margin-bottom: 30px;
+    overflow-x: auto;
+
+}
+
+#stats-table{
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+#stats-table thead th{
+    background-color: var(--primary);
+    color: white;
+    padding: 10px 12px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.88rem;
+}
+
+#stats-table tbody td{
+    padding: 9px 12px;
+    text-align: center;
+    border-color: 1px solid var(--border);
+    color:var(--text-dark)
+}
+#stats-table tbody tr:hover{
+    background-color: #a6aeb9;
+}
+
+#stats-table tbody td:first-child{
+    font-size: 600;
+    color: var(--primary);
+    font-weight: bold;
+}
+
+#stats-table tbody tr:nth-child(even){
+    background-color: #c2c8d3;
+}
+#stats-table tbody tr:nth-child(even):hover{
+background-color: #8c97aa;
+}
+
+@media (max-width:600px) {
+    h1{
+        font-size: 1.15rem;
+    }
+    form{
+        padding: 14px 10px;
+    }
+    form input[type="number"]{
+        width: 58px;
+        font-size: 0.82rem;
+    }
+    form table thead th, form table tbody td{
+        padding: 7px 6px;
+        font-size:0.82rem;
+    }
+    #execute-btn{
+        padding: 9px 24px;
+        font-size: 0.93rem;
+    }
+    #stats-table thead th, #stats-table tbody td{
+        padding: 7px;
+        font-size: 0.78rem;
+    }
+    #gantt-section, #final-gantt-section,#stats {
+        padding: 14px 10px;
+    }
 }
